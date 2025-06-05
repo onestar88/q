@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>골다공증 자가진단</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+    h1 { color: #2c3e50; }
+    .question { margin-top: 20px; }
+    button { margin-top: 30px; padding: 10px 20px; font-size: 16px; }
+    #result { margin-top: 30px; font-weight: bold; white-space: pre-line; }
+  </style>
+</head>
+<body>
+  <h1>🦴 골다공증 자가진단 (갱년기 여성 대상)</h1>
+  <form id="quizForm">
+    <div class="question">
+      <p>1. 나이:</p>
+      <label><input type="radio" name="q1" value="0"> 40세 미만</label><br>
+      <label><input type="radio" name="q1" value="1"> 40~49세</label><br>
+      <label><input type="radio" name="q1" value="2"> 50~59세</label><br>
+      <label><input type="radio" name="q1" value="3"> 60세 이상</label>
+    </div>
+    <div class="question">
+      <p>2. 폐경 여부:</p>
+      <label><input type="radio" name="q2" value="0"> 폐경 전</label><br>
+      <label><input type="radio" name="q2" value="1"> 폐경 중</label><br>
+      <label><input type="radio" name="q2" value="2"> 폐경 후</label>
+    </div>
+    <div class="question">
+      <p>3. 골절 병력:</p>
+      <label><input type="radio" name="q3" value="1"> 아니오</label><br>
+      <label><input type="radio" name="q3" value="2"> 예</label>
+    </div>
+    <div class="question">
+      <p>4. 가족 중 골다공증 진단 유무:</p>
+      <label><input type="radio" name="q4" value="1"> 없음/모름</label><br>
+      <label><input type="radio" name="q4" value="2"> 있음</label>
+    </div>
+    <div class="question">
+      <p>5. 유제품 섭취 빈도:</p>
+      <label><input type="radio" name="q5" value="0"> 하루 2회 이상</label><br>
+      <label><input type="radio" name="q5" value="1"> 하루 1회 이하</label><br>
+      <label><input type="radio" name="q5" value="2"> 거의 안 먹음</label>
+    </div>
+    <div class="question">
+      <p>6. 영양제 섭취 빈도:</p>
+      <label><input type="radio" name="q6" value="0"> 규칙적으로 섭취</label><br>
+      <label><input type="radio" name="q6" value="1"> 가끔 섭취</label><br>
+      <label><input type="radio" name="q6" value="2"> 섭취 안 함</label>
+    </div>
+    <div class="question">
+      <p>7. 대두식품 섭취 빈도:</p>
+      <label><input type="radio" name="q7" value="0"> 규칙적으로 섭취</label><br>
+      <label><input type="radio" name="q7" value="1"> 가끔 섭취</label><br>
+      <label><input type="radio" name="q7" value="2"> 섭취 안 함</label>
+    </div>
+    <div class="question">
+      <p>8. 운동 빈도:</p>
+      <label><input type="radio" name="q8" value="0"> 주 3회 이상</label><br>
+      <label><input type="radio" name="q8" value="1"> 주 1~2회</label><br>
+      <label><input type="radio" name="q8" value="2"> 안 함</label>
+    </div>
+    <div class="question">
+      <p>9. 흡연 또는 음주 여부:</p>
+      <label><input type="radio" name="q9" value="0"> 둘 다 안 함</label><br>
+      <label><input type="radio" name="q9" value="1"> 하나만 함</label><br>
+      <label><input type="radio" name="q9" value="2"> 둘 다 함</label>
+    </div>
+    <div class="question">
+      <p>10. 햇볕을 자주 쬐는 야외활동:</p>
+      <label><input type="radio" name="q10" value="0"> 자주 한다</label><br>
+      <label><input type="radio" name="q10" value="1"> 가끔 한다</label><br>
+      <label><input type="radio" name="q10" value="2"> 거의 안 한다</label>
+    </div>
+    <div class="question">
+      <p>11. 자세가 구부정하거나 허리가 자주 아픈가:</p>
+      <label><input type="radio" name="q11" value="1"> 아니다</label><br>
+      <label><input type="radio" name="q11" value="2"> 그렇다</label>
+    </div>
+    <button type="button" onclick="calculateScore()">점수 계산</button>
+  </form>
+  <div id="result"></div>
+
+  <script>
+    function calculateScore() {
+      let total = 0;
+      let unanswered = false;
+      for (let i = 1; i <= 11; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        if (!selected) {
+          unanswered = true;
+          break;
+        }
+        total += parseInt(selected.value);
+      }
+      if (unanswered) {
+        alert("모든 질문에 답변해 주세요!");
+        return;
+      }
+      let message = '';
+      if (total <= 7) message = '골다공증 위험 낮음';
+      else if (total <= 15) message = '중간 위험 - 생활습관 개선 필요';
+      else message = '고위험군 - 정밀검사를 고려하고, 식사/운동/영양제 섭취 등 전반적인 관리가 필요';
+      document.getElementById("result").innerText = `총점: ${total}점\n${message}`;
+    }
+  </script>
+</body>
+</html>
